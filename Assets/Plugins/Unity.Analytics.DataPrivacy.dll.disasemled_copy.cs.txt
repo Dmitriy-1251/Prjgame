@@ -1,0 +1,203 @@
+// Decompile from assembly: Unity.Analytics.DataPrivacy.dll
+
+using System;
+
+internal class <Module>
+{
+}
+
+// Decompile from assembly: Unity.Analytics.DataPrivacy.dll
+
+using System;
+using System.Runtime.CompilerServices;
+using System.Text;
+using UnityEngine.Networking;
+
+namespace UnityEngine.Analytics
+{
+	public class DataPrivacy
+	{
+		[Serializable]
+		internal struct UserPostData
+		{
+			public string appid;
+
+			public string userid;
+
+			public long sessionid;
+
+			public string platform;
+
+			public uint platformid;
+
+			public string sdk_ver;
+
+			public bool debug_device;
+
+			public string deviceid;
+
+			public string plugin_ver;
+		}
+
+		[Serializable]
+		internal struct TokenData
+		{
+			public string url;
+
+			public string token;
+		}
+
+		private sealed class __c__DisplayClass9_0
+		{
+			public UnityWebRequest www;
+
+			public Action<string> failure;
+
+			public Action<string> success;
+
+			internal void _FetchPrivacyUrl_b__0(AsyncOperation async2)
+			{
+				string text = this.www.downloadHandler.text;
+				if (!string.IsNullOrEmpty(this.www.error) || string.IsNullOrEmpty(text))
+				{
+					string errorString = DataPrivacy.getErrorString(this.www);
+					if (this.failure != null)
+					{
+						this.failure(errorString);
+						return;
+					}
+				}
+				else
+				{
+					DataPrivacy.TokenData tokenData;
+					tokenData.url = "";
+					try
+					{
+						tokenData = JsonUtility.FromJson<DataPrivacy.TokenData>(text);
+					}
+					catch (Exception ex)
+					{
+						if (this.failure != null)
+						{
+							this.failure(ex.ToString());
+						}
+					}
+					this.success(tokenData.url);
+				}
+			}
+		}
+
+		private const string kVersion = "3.0.0";
+
+		private const string kVersionString = "DataPrivacyPackage/3.0.0";
+
+		internal const string kBaseUrl = "https://data-optout-service.uca.cloud.unity3d.com";
+
+		private const string kTokenUrl = "https://data-optout-service.uca.cloud.unity3d.com/token";
+
+		internal static DataPrivacy.UserPostData GetUserData()
+		{
+			return new DataPrivacy.UserPostData
+			{
+				appid = Application.cloudProjectId,
+				userid = AnalyticsSessionInfo.userId,
+				sessionid = AnalyticsSessionInfo.sessionId,
+				platform = Application.platform.ToString(),
+				platformid = (uint)Application.platform,
+				sdk_ver = Application.unityVersion,
+				debug_device = Debug.isDebugBuild,
+				deviceid = SystemInfo.deviceUniqueIdentifier,
+				plugin_ver = "DataPrivacyPackage/3.0.0"
+			};
+		}
+
+		private static string GetUserAgent()
+		{
+			return string.Format("UnityPlayer/{0} ({1}/{2}{3} {4})", new object[]
+			{
+				Application.unityVersion,
+				Application.platform.ToString(),
+				(uint)Application.platform,
+				UnityEngine.Debug.isDebugBuild ? "-dev" : "",
+				"DataPrivacyPackage/3.0.0"
+			});
+		}
+
+		private static string getErrorString(UnityWebRequest www)
+		{
+			string text = www.downloadHandler.text;
+			string text2 = www.error;
+			if (string.IsNullOrEmpty(text2))
+			{
+				text2 = "Empty response";
+			}
+			if (!string.IsNullOrEmpty(text))
+			{
+				text2 = text2 + ": " + text;
+			}
+			return text2;
+		}
+
+		public static void FetchPrivacyUrl(Action<string> success, Action<string> failure = null)
+		{
+			DataPrivacy.__c__DisplayClass9_0 __c__DisplayClass9_ = new DataPrivacy.__c__DisplayClass9_0();
+			__c__DisplayClass9_.failure = failure;
+			__c__DisplayClass9_.success = success;
+			string s = JsonUtility.ToJson(DataPrivacy.GetUserData());
+			UploadHandlerRaw uploadHandlerRaw = new UploadHandlerRaw(Encoding.UTF8.GetBytes(s));
+			uploadHandlerRaw.contentType = "application/json";
+			__c__DisplayClass9_.www = UnityWebRequest.Post("https://data-optout-service.uca.cloud.unity3d.com/token", "");
+			__c__DisplayClass9_.www.uploadHandler = uploadHandlerRaw;
+			__c__DisplayClass9_.www.SetRequestHeader("User-Agent", DataPrivacy.GetUserAgent());
+			__c__DisplayClass9_.www.SendWebRequest().completed += new Action<AsyncOperation>(__c__DisplayClass9_._FetchPrivacyUrl_b__0);
+		}
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.DataPrivacy.dll
+
+using System;
+using UnityEngine.Events;
+using UnityEngine.UI;
+
+namespace UnityEngine.Analytics
+{
+	public class DataPrivacyButton : Button
+	{
+		private bool urlOpened;
+
+		private DataPrivacyButton()
+		{
+			base.onClick.AddListener(new UnityAction(this.OpenDataPrivacyUrl));
+		}
+
+		private void OnFailure(string reason)
+		{
+			base.interactable = true;
+			UnityEngine.Debug.LogWarning(string.Format("Failed to get data privacy url: {0}", reason));
+		}
+
+		private void OpenUrl(string url)
+		{
+			base.interactable = true;
+			this.urlOpened = true;
+			Application.OpenURL(url);
+		}
+
+		private void OpenDataPrivacyUrl()
+		{
+			base.interactable = false;
+			DataPrivacy.FetchPrivacyUrl(new Action<string>(this.OpenUrl), new Action<string>(this.OnFailure));
+		}
+
+		private void OnApplicationFocus(bool hasFocus)
+		{
+			if (hasFocus && this.urlOpened)
+			{
+				this.urlOpened = false;
+				RemoteSettings.ForceUpdate();
+			}
+		}
+	}
+}
+

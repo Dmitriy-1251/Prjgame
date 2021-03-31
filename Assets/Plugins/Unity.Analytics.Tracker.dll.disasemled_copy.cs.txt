@@ -1,0 +1,1479 @@
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+
+internal class <Module>
+{
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+
+namespace UnityEngine.Analytics
+{
+	[AddComponentMenu("Analytics/Analytics Event Tracker")]
+	public class AnalyticsEventTracker : MonoBehaviour
+	{
+		private sealed class _TimedTrigger_c__Iterator0 : IEnumerator, IDisposable, IEnumerator<object>
+		{
+			internal AnalyticsEventTracker _this;
+
+			internal object _current;
+
+			internal bool _disposing;
+
+			internal int _PC;
+
+			object IEnumerator<object>.Current
+			{
+				get
+				{
+					return this._current;
+				}
+			}
+
+			object IEnumerator.Current
+			{
+				get
+				{
+					return this._current;
+				}
+			}
+
+			public _TimedTrigger_c__Iterator0()
+			{
+			}
+
+			public bool MoveNext()
+			{
+				uint num = (uint)this._PC;
+				this._PC = -1;
+				switch (num)
+				{
+				case 0u:
+					if (this._this.m_Trigger.initTime > 0f)
+					{
+						this._current = new WaitForSeconds(this._this.m_Trigger.initTime);
+						if (!this._disposing)
+						{
+							this._PC = 1;
+						}
+						return true;
+					}
+					break;
+				case 1u:
+					break;
+				case 2u:
+					goto IL_EC;
+				case 3u:
+					goto IL_EC;
+				default:
+					return false;
+				}
+				this._this.SendEvent();
+				goto IL_F8;
+				IL_EC:
+				this._this.SendEvent();
+				IL_F8:
+				if (this._this.m_Trigger.repetitions != 0 && this._this.m_Trigger.repetitionCount > this._this.m_Trigger.repetitions)
+				{
+					this._PC = -1;
+				}
+				else
+				{
+					if (this._this.m_Trigger.repeatTime > 0f)
+					{
+						this._current = new WaitForSeconds(this._this.m_Trigger.repeatTime);
+						if (!this._disposing)
+						{
+							this._PC = 2;
+						}
+						return true;
+					}
+					this._current = null;
+					if (!this._disposing)
+					{
+						this._PC = 3;
+					}
+					return true;
+				}
+				return false;
+			}
+
+			public void Dispose()
+			{
+				this._disposing = true;
+				this._PC = -1;
+			}
+
+			public void Reset()
+			{
+				throw new NotSupportedException();
+			}
+		}
+
+		[SerializeField]
+		public EventTrigger m_Trigger = new EventTrigger();
+
+		[SerializeField]
+		private StandardEventPayload m_EventPayload = new StandardEventPayload();
+
+		public StandardEventPayload payload
+		{
+			get
+			{
+				return this.m_EventPayload;
+			}
+		}
+
+		public void TriggerEvent()
+		{
+			this.SendEvent();
+		}
+
+		private AnalyticsResult SendEvent()
+		{
+			if (this.m_Trigger.Test(base.gameObject))
+			{
+				return this.payload.Send();
+			}
+			return AnalyticsResult.Ok;
+		}
+
+		private void Awake()
+		{
+			if (this.m_Trigger.triggerType == TriggerType.Lifecycle && this.m_Trigger.lifecycleEvent == TriggerLifecycleEvent.Awake)
+			{
+				this.SendEvent();
+			}
+		}
+
+		private void Start()
+		{
+			if (this.m_Trigger.triggerType == TriggerType.Lifecycle && this.m_Trigger.lifecycleEvent == TriggerLifecycleEvent.Start)
+			{
+				this.SendEvent();
+			}
+			else if (this.m_Trigger.triggerType == TriggerType.Timer)
+			{
+				base.StartCoroutine(this.TimedTrigger());
+			}
+		}
+
+		private void OnEnable()
+		{
+			if (this.m_Trigger.triggerType == TriggerType.Lifecycle && this.m_Trigger.lifecycleEvent == TriggerLifecycleEvent.OnEnable)
+			{
+				this.SendEvent();
+			}
+		}
+
+		private void OnDisable()
+		{
+			if (this.m_Trigger.triggerType == TriggerType.Lifecycle && this.m_Trigger.lifecycleEvent == TriggerLifecycleEvent.OnDisable)
+			{
+				this.SendEvent();
+			}
+		}
+
+		private void OnApplicationPause(bool paused)
+		{
+			if (this.m_Trigger.triggerType == TriggerType.Lifecycle)
+			{
+				if (paused && this.m_Trigger.lifecycleEvent == TriggerLifecycleEvent.OnApplicationPause)
+				{
+					this.SendEvent();
+				}
+				else if (!paused && this.m_Trigger.lifecycleEvent == TriggerLifecycleEvent.OnApplicationUnpause)
+				{
+					this.SendEvent();
+				}
+			}
+		}
+
+		private void OnDestroy()
+		{
+			if (this.m_Trigger.triggerType == TriggerType.Lifecycle && this.m_Trigger.lifecycleEvent == TriggerLifecycleEvent.OnDestroy)
+			{
+				this.SendEvent();
+			}
+		}
+
+		private IEnumerator TimedTrigger()
+		{
+			AnalyticsEventTracker._TimedTrigger_c__Iterator0 _TimedTrigger_c__Iterator = new AnalyticsEventTracker._TimedTrigger_c__Iterator0();
+			_TimedTrigger_c__Iterator._this = this;
+			return _TimedTrigger_c__Iterator;
+		}
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+
+namespace UnityEngine.Analytics
+{
+	public static class AnalyticsEventTrackerSettings
+	{
+		public static readonly int paramCountMax = 10;
+
+		public static readonly int triggerRuleCountMax = 5;
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+
+namespace UnityEngine.Analytics
+{
+	[Serializable]
+	public class AnalyticsEventParam
+	{
+		public enum RequirementType
+		{
+			None,
+			Required,
+			Optional
+		}
+
+		[SerializeField]
+		private AnalyticsEventParam.RequirementType m_RequirementType;
+
+		[SerializeField]
+		private string m_GroupID;
+
+		[SerializeField]
+		private string m_Tooltip = string.Empty;
+
+		[SerializeField]
+		private string m_Name;
+
+		[SerializeField]
+		private ValueProperty m_Value;
+
+		public AnalyticsEventParam.RequirementType requirementType
+		{
+			get
+			{
+				return this.m_RequirementType;
+			}
+		}
+
+		public string groupID
+		{
+			get
+			{
+				return this.m_GroupID;
+			}
+		}
+
+		public ValueProperty valueProperty
+		{
+			get
+			{
+				return this.m_Value;
+			}
+		}
+
+		public string name
+		{
+			get
+			{
+				return this.m_Name;
+			}
+		}
+
+		public object value
+		{
+			get
+			{
+				return this.m_Value.propertyValue;
+			}
+		}
+
+		public AnalyticsEventParam(string name)
+		{
+			this.m_Name = name.Trim();
+		}
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+using System.Collections.Generic;
+
+namespace UnityEngine.Analytics
+{
+	[Serializable]
+	public class AnalyticsEventParamListContainer
+	{
+		[SerializeField]
+		private List<AnalyticsEventParam> m_Parameters = new List<AnalyticsEventParam>();
+
+		public List<AnalyticsEventParam> parameters
+		{
+			get
+			{
+				return this.m_Parameters;
+			}
+			set
+			{
+				this.m_Parameters = value;
+			}
+		}
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+using System.Collections.Generic;
+
+namespace UnityEngine.Analytics
+{
+	[Serializable]
+	public class StandardEventPayload
+	{
+		[SerializeField]
+		private bool m_IsEventExpanded = true;
+
+		[SerializeField]
+		private string m_StandardEventType = "CustomEvent";
+
+		public Type standardEventType;
+
+		[SerializeField]
+		private AnalyticsEventParamListContainer m_Parameters;
+
+		private static Dictionary<string, object> m_EventData = new Dictionary<string, object>();
+
+		[SerializeField]
+		private string m_Name = string.Empty;
+
+		public AnalyticsEventParamListContainer parameters
+		{
+			get
+			{
+				return this.m_Parameters;
+			}
+		}
+
+		public string name
+		{
+			get
+			{
+				return this.m_Name;
+			}
+			set
+			{
+				this.m_Name = value;
+			}
+		}
+
+		public StandardEventPayload()
+		{
+			this.m_Parameters = new AnalyticsEventParamListContainer();
+		}
+
+		public virtual AnalyticsResult Send()
+		{
+			if (string.IsNullOrEmpty(this.name))
+			{
+				throw new Exception("Analtyics Event Tracker failed to send the CustomEvent. The event Name field cannot be empty.");
+			}
+			if (!this.IsCustomDataValid())
+			{
+				throw new Exception("Analytics event tracker failed to send. The event data is not valid. Parameter names cannot be null or empty.");
+			}
+			if (!this.IsRequiredDataValid())
+			{
+				throw new Exception("Analytics event tracker failed to send. The event data is not valid. Please check the values of required parameters.");
+			}
+			return AnalyticsEvent.Custom(this.name.Trim(), this.GetParameters());
+		}
+
+		private IDictionary<string, object> GetParameters()
+		{
+			StandardEventPayload.m_EventData.Clear();
+			List<AnalyticsEventParam> parameters = this.parameters.parameters;
+			for (int i = 0; i < parameters.Count; i++)
+			{
+				if (parameters[i] != null && parameters[i].valueProperty.IsValid())
+				{
+					StandardEventPayload.m_EventData.Add(parameters[i].name, parameters[i].value);
+				}
+			}
+			return StandardEventPayload.m_EventData;
+		}
+
+		private bool IsCustomDataValid()
+		{
+			List<AnalyticsEventParam> parameters = this.parameters.parameters;
+			for (int i = 0; i < parameters.Count; i++)
+			{
+				if (parameters[i] != null)
+				{
+					if (string.IsNullOrEmpty(parameters[i].name) && parameters[i].valueProperty.IsValid())
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		private bool IsRequiredDataValid()
+		{
+			List<AnalyticsEventParam> parameters = this.parameters.parameters;
+			Dictionary<string, List<bool>> dictionary = new Dictionary<string, List<bool>>();
+			for (int i = 0; i < parameters.Count; i++)
+			{
+				if (parameters[i] != null && parameters[i].requirementType == AnalyticsEventParam.RequirementType.Required)
+				{
+					if (string.IsNullOrEmpty(parameters[i].groupID))
+					{
+						if (!dictionary.ContainsKey("none"))
+						{
+							dictionary.Add("none", new List<bool>());
+						}
+						dictionary["none"].Add(parameters[i].valueProperty.IsValid());
+					}
+					else
+					{
+						if (!dictionary.ContainsKey(parameters[i].groupID))
+						{
+							dictionary.Add(parameters[i].groupID, new List<bool>());
+						}
+						dictionary[parameters[i].groupID].Add(parameters[i].valueProperty.IsValid());
+					}
+				}
+			}
+			foreach (string current in dictionary.Keys)
+			{
+				if (current != null)
+				{
+					if (current == "none")
+					{
+						if (dictionary[current].Contains(false))
+						{
+							bool result = false;
+							return result;
+						}
+						continue;
+					}
+				}
+				if (!dictionary[current].Contains(true))
+				{
+					bool result = false;
+					return result;
+				}
+			}
+			return true;
+		}
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+using System.Reflection;
+
+namespace UnityEngine.Analytics
+{
+	[Serializable]
+	public class TrackableField : TrackablePropertyBase
+	{
+		[SerializeField]
+		private string[] m_ValidTypeNames;
+
+		[SerializeField]
+		private string m_Type;
+
+		[SerializeField]
+		private string m_EnumType;
+
+		public TrackableField(params Type[] validTypes)
+		{
+			if (validTypes == null || validTypes.Length == 0)
+			{
+				return;
+			}
+			this.m_ValidTypeNames = new string[validTypes.Length];
+			for (int i = 0; i < validTypes.Length; i++)
+			{
+				this.m_ValidTypeNames[i] = validTypes[i].ToString();
+			}
+		}
+
+		public object GetValue()
+		{
+			if (this.m_Target == null || string.IsNullOrEmpty(this.m_Path))
+			{
+				return null;
+			}
+			object obj = this.m_Target;
+			string[] array = this.m_Path.Split(new char[]
+			{
+				'.'
+			});
+			for (int i = 0; i < array.Length; i++)
+			{
+				string name = array[i];
+				try
+				{
+					PropertyInfo property = obj.GetType().GetProperty(name);
+					obj = property.GetValue(obj, null);
+				}
+				catch
+				{
+					FieldInfo field = obj.GetType().GetField(name);
+					obj = field.GetValue(obj);
+				}
+			}
+			return obj;
+		}
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+
+namespace UnityEngine.Analytics
+{
+	[Serializable]
+	public abstract class TrackablePropertyBase
+	{
+		[SerializeField]
+		protected Object m_Target;
+
+		[SerializeField]
+		protected string m_Path;
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+
+namespace UnityEngine.Analytics
+{
+	[Serializable]
+	public class ValueProperty
+	{
+		public enum PropertyType
+		{
+			Disabled,
+			Static,
+			Dynamic
+		}
+
+		[SerializeField]
+		private bool m_EditingCustomValue;
+
+		[SerializeField]
+		private int m_PopupIndex;
+
+		[SerializeField]
+		private string m_CustomValue;
+
+		[SerializeField]
+		private bool m_FixedType;
+
+		[SerializeField]
+		private string m_EnumType;
+
+		[SerializeField]
+		private bool m_EnumTypeIsCustomizable = true;
+
+		[SerializeField]
+		private bool m_CanDisable;
+
+		[SerializeField]
+		private ValueProperty.PropertyType m_PropertyType = ValueProperty.PropertyType.Static;
+
+		[SerializeField]
+		private string m_ValueType;
+
+		[SerializeField]
+		private string m_Value = string.Empty;
+
+		[SerializeField]
+		private TrackableField m_Target;
+
+		public string valueType
+		{
+			get
+			{
+				return this.m_ValueType;
+			}
+			set
+			{
+				this.m_ValueType = value;
+			}
+		}
+
+		public string propertyValue
+		{
+			get
+			{
+				if (this.m_PropertyType == ValueProperty.PropertyType.Dynamic && this.m_Target != null)
+				{
+					object value = this.m_Target.GetValue();
+					return (value != null) ? value.ToString().Trim() : null;
+				}
+				return (this.m_Value != null) ? this.m_Value.Trim() : null;
+			}
+		}
+
+		public TrackableField target
+		{
+			get
+			{
+				return this.m_Target;
+			}
+		}
+
+		public bool IsValid()
+		{
+			switch (this.m_PropertyType)
+			{
+			case ValueProperty.PropertyType.Static:
+				return !string.IsNullOrEmpty(this.m_Value) || Type.GetType(this.m_ValueType) != typeof(string);
+			case ValueProperty.PropertyType.Dynamic:
+				return this.m_Target != null && this.m_Target.GetValue() != null;
+			}
+			return false;
+		}
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+using System.Collections.Generic;
+
+namespace UnityEngine.Analytics
+{
+	[Obsolete("Analytics Tracker is deprecated. Use Analytics Event Tracker instead!"), AddComponentMenu("")]
+	public class AnalyticsTracker : MonoBehaviour
+	{
+		[Serializable]
+		internal enum Trigger
+		{
+			External,
+			Awake,
+			Start,
+			OnEnable,
+			OnDisable,
+			OnApplicationPause,
+			OnDestroy
+		}
+
+		[SerializeField]
+		private string m_EventName;
+
+		private Dictionary<string, object> m_Dict = new Dictionary<string, object>();
+
+		private int m_PrevDictHash;
+
+		[SerializeField]
+		private TrackableProperty m_TrackableProperty = new TrackableProperty();
+
+		[SerializeField]
+		internal AnalyticsTracker.Trigger m_Trigger;
+
+		public string eventName
+		{
+			get
+			{
+				return this.m_EventName;
+			}
+			set
+			{
+				this.m_EventName = value;
+			}
+		}
+
+		internal TrackableProperty TP
+		{
+			get
+			{
+				return this.m_TrackableProperty;
+			}
+			set
+			{
+				this.m_TrackableProperty = value;
+			}
+		}
+
+		private void Awake()
+		{
+			if (this.m_Trigger == AnalyticsTracker.Trigger.Awake)
+			{
+				this.TriggerEvent();
+			}
+		}
+
+		private void Start()
+		{
+			if (this.m_Trigger == AnalyticsTracker.Trigger.Start)
+			{
+				this.TriggerEvent();
+			}
+		}
+
+		private void OnEnable()
+		{
+			if (this.m_Trigger == AnalyticsTracker.Trigger.OnEnable)
+			{
+				this.TriggerEvent();
+			}
+		}
+
+		private void OnDisable()
+		{
+			if (this.m_Trigger == AnalyticsTracker.Trigger.OnDisable)
+			{
+				this.TriggerEvent();
+			}
+		}
+
+		private void OnApplicationPause()
+		{
+			if (this.m_Trigger == AnalyticsTracker.Trigger.OnApplicationPause)
+			{
+				this.TriggerEvent();
+			}
+		}
+
+		private void OnDestroy()
+		{
+			if (this.m_Trigger == AnalyticsTracker.Trigger.OnDestroy)
+			{
+				this.TriggerEvent();
+			}
+		}
+
+		public void TriggerEvent()
+		{
+			this.BuildParameters();
+			this.SendEvent();
+		}
+
+		private void SendEvent()
+		{
+			Analytics.CustomEvent(this.m_EventName, this.m_Dict);
+		}
+
+		private void BuildParameters()
+		{
+			int hashCode = this.m_TrackableProperty.GetHashCode();
+			if (hashCode != this.m_PrevDictHash)
+			{
+				this.m_Dict.Clear();
+			}
+			this.m_PrevDictHash = hashCode;
+			int i = 0;
+			int count = this.m_TrackableProperty.fields.Count;
+			while (i < count)
+			{
+				TrackableProperty.FieldWithTarget fieldWithTarget = this.m_TrackableProperty.fields[i];
+				if (fieldWithTarget.target != null || fieldWithTarget.doStatic)
+				{
+					string value = fieldWithTarget.GetValue().ToString();
+					this.m_Dict[fieldWithTarget.paramName] = value;
+				}
+				i++;
+			}
+		}
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+
+namespace UnityEngine.Analytics
+{
+	[Serializable]
+	internal class TrackableProperty
+	{
+		[Serializable]
+		internal class FieldWithTarget
+		{
+			[SerializeField]
+			private string m_ParamName;
+
+			[SerializeField]
+			private Object m_Target;
+
+			[SerializeField]
+			private string m_FieldPath;
+
+			[SerializeField]
+			private string m_TypeString;
+
+			[SerializeField]
+			private bool m_DoStatic;
+
+			[SerializeField]
+			private string m_StaticString;
+
+			public string paramName
+			{
+				get
+				{
+					return this.m_ParamName;
+				}
+				set
+				{
+					this.m_ParamName = value;
+				}
+			}
+
+			public Object target
+			{
+				get
+				{
+					return this.m_Target;
+				}
+				set
+				{
+					this.m_Target = value;
+				}
+			}
+
+			public string fieldPath
+			{
+				get
+				{
+					return this.m_FieldPath;
+				}
+				set
+				{
+					this.m_FieldPath = value;
+				}
+			}
+
+			public string typeString
+			{
+				get
+				{
+					return this.m_TypeString;
+				}
+				set
+				{
+					this.m_TypeString = value;
+				}
+			}
+
+			public bool doStatic
+			{
+				get
+				{
+					return this.m_DoStatic;
+				}
+				set
+				{
+					this.m_DoStatic = value;
+				}
+			}
+
+			public string staticString
+			{
+				get
+				{
+					return this.m_StaticString;
+				}
+				set
+				{
+					this.m_StaticString = value;
+				}
+			}
+
+			public object GetValue()
+			{
+				if (this.m_DoStatic)
+				{
+					return this.m_StaticString;
+				}
+				object obj = this.m_Target;
+				string[] array = this.m_FieldPath.Split(new char[]
+				{
+					'.'
+				});
+				for (int i = 0; i < array.Length; i++)
+				{
+					string name = array[i];
+					Type type = obj.GetType();
+					PropertyInfo property = type.GetProperty(name);
+					FieldInfo field = type.GetField(name);
+					if (property != null)
+					{
+						obj = property.GetValue(obj, null);
+					}
+					else
+					{
+						if (field == null)
+						{
+							return null;
+						}
+						obj = field.GetValue(obj);
+					}
+				}
+				return obj;
+			}
+		}
+
+		public const int kMaxParams = 10;
+
+		[SerializeField]
+		private List<TrackableProperty.FieldWithTarget> m_Fields;
+
+		public List<TrackableProperty.FieldWithTarget> fields
+		{
+			get
+			{
+				return this.m_Fields;
+			}
+			set
+			{
+				this.m_Fields = value;
+			}
+		}
+
+		public override int GetHashCode()
+		{
+			int num = 17;
+			foreach (TrackableProperty.FieldWithTarget current in this.m_Fields)
+			{
+				num = num * 23 + current.paramName.GetHashCode();
+			}
+			return num;
+		}
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+
+namespace UnityEngine.Analytics
+{
+	public enum TriggerBool
+	{
+		All,
+		Any,
+		None
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+
+namespace UnityEngine.Analytics
+{
+	public enum TriggerLifecycleEvent
+	{
+		None,
+		Awake,
+		Start,
+		OnEnable,
+		OnDisable,
+		OnApplicationPause,
+		OnApplicationUnpause,
+		OnDestroy
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+
+namespace UnityEngine.Analytics
+{
+	public enum TriggerOperator
+	{
+		Equals,
+		DoesNotEqual,
+		IsGreaterThan,
+		IsGreaterThanOrEqualTo,
+		IsLessThan,
+		IsLessThanOrEqualTo,
+		IsBetween,
+		IsBetweenOrEqualTo
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+
+namespace UnityEngine.Analytics
+{
+	public enum TriggerType
+	{
+		Lifecycle,
+		External,
+		Timer,
+		ExposedMethod
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+using System.Collections.Generic;
+
+namespace UnityEngine.Analytics
+{
+	[Serializable]
+	public class TriggerListContainer
+	{
+		[SerializeField]
+		private List<TriggerRule> m_Rules = new List<TriggerRule>();
+
+		internal List<TriggerRule> rules
+		{
+			get
+			{
+				return this.m_Rules;
+			}
+			set
+			{
+				this.m_Rules = value;
+			}
+		}
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+
+namespace UnityEngine.Analytics
+{
+	[Serializable]
+	public class EventTrigger
+	{
+		internal delegate void OnTrigger();
+
+		[SerializeField]
+		private bool m_IsTriggerExpanded = true;
+
+		[SerializeField]
+		private TriggerType m_Type;
+
+		[SerializeField]
+		private TriggerLifecycleEvent m_LifecycleEvent;
+
+		[SerializeField]
+		private bool m_ApplyRules;
+
+		[SerializeField]
+		private TriggerListContainer m_Rules;
+
+		[SerializeField]
+		private TriggerBool m_TriggerBool;
+
+		[SerializeField]
+		private float m_InitTime = 5f;
+
+		[SerializeField]
+		private float m_RepeatTime = 5f;
+
+		[SerializeField]
+		private int m_Repetitions;
+
+		public int repetitionCount;
+
+		private EventTrigger.OnTrigger m_TriggerFunction;
+
+		[SerializeField]
+		private TriggerMethod m_Method;
+
+		public TriggerType triggerType
+		{
+			get
+			{
+				return this.m_Type;
+			}
+		}
+
+		public TriggerLifecycleEvent lifecycleEvent
+		{
+			get
+			{
+				return this.m_LifecycleEvent;
+			}
+		}
+
+		public float initTime
+		{
+			get
+			{
+				return this.m_InitTime;
+			}
+			set
+			{
+				this.m_InitTime = value;
+			}
+		}
+
+		public float repeatTime
+		{
+			get
+			{
+				return this.m_RepeatTime;
+			}
+			set
+			{
+				this.m_RepeatTime = value;
+			}
+		}
+
+		public int repetitions
+		{
+			get
+			{
+				return this.m_Repetitions;
+			}
+			set
+			{
+				this.m_Repetitions = value;
+			}
+		}
+
+		public EventTrigger()
+		{
+			this.m_Rules = new TriggerListContainer();
+		}
+
+		public void AddRule()
+		{
+			TriggerRule item = new TriggerRule();
+			this.m_Rules.rules.Add(item);
+		}
+
+		public void RemoveRule(int index)
+		{
+			this.m_Rules.rules.RemoveAt(index);
+		}
+
+		public bool Test(GameObject gameObject = null)
+		{
+			if (!this.m_ApplyRules)
+			{
+				return true;
+			}
+			if (this.repetitions > 0 && this.repetitionCount >= this.repetitions)
+			{
+				return false;
+			}
+			bool flag = false;
+			int num = 0;
+			int num2 = 0;
+			foreach (TriggerRule current in this.m_Rules.rules)
+			{
+				num2++;
+				bool flag2;
+				string text;
+				if (current.Test(out flag2, out text))
+				{
+					num++;
+				}
+				else if (flag2)
+				{
+					UnityEngine.Debug.LogWarningFormat("Event trigger rule {0}{2} is incomplete ({1}). Result is false.", new object[]
+					{
+						num2,
+						text,
+						(!(gameObject == null)) ? string.Format(" on GameObject '{0}'", gameObject.name) : null
+					});
+				}
+				TriggerBool triggerBool = this.m_TriggerBool;
+				if (triggerBool != TriggerBool.All)
+				{
+					if (triggerBool != TriggerBool.None)
+					{
+						if (triggerBool == TriggerBool.Any)
+						{
+							if (num > 0)
+							{
+								flag = true;
+							}
+						}
+					}
+					else if (num > 0)
+					{
+						flag = false;
+					}
+				}
+				else if (num < num2)
+				{
+					flag = false;
+				}
+			}
+			if ((this.m_TriggerBool == TriggerBool.All && num == num2) || (this.m_TriggerBool == TriggerBool.None && num == 0))
+			{
+				flag = true;
+			}
+			if (this.repetitions > 0 && flag)
+			{
+				this.repetitionCount++;
+			}
+			return flag;
+		}
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+
+namespace UnityEngine.Analytics
+{
+	[Serializable]
+	public class TrackableTrigger
+	{
+		[SerializeField]
+		private GameObject m_Target;
+
+		[SerializeField]
+		private string m_MethodPath;
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+
+namespace UnityEngine.Analytics
+{
+	public class TriggerMethod
+	{
+	}
+}
+
+// Decompile from assembly: Unity.Analytics.Tracker.dll
+
+using System;
+
+namespace UnityEngine.Analytics
+{
+	[Serializable]
+	public class TriggerRule
+	{
+		[SerializeField]
+		private TrackableField m_Target;
+
+		[SerializeField]
+		private TriggerOperator m_Operator;
+
+		[SerializeField]
+		private ValueProperty m_Value;
+
+		[SerializeField]
+		private ValueProperty m_Value2;
+
+		public bool Test()
+		{
+			bool flag;
+			string text;
+			return this.Test(out flag, out text);
+		}
+
+		public bool Test(out bool error, out string message)
+		{
+			error = false;
+			message = null;
+			if (this.m_Target == null || this.m_Target.GetValue() == null)
+			{
+				error = true;
+				message = "rule target is not set";
+				return false;
+			}
+			if (this.m_Value == null || this.m_Value.target == null || this.m_Value.propertyValue == null)
+			{
+				error = true;
+				message = "rule value is not set";
+				return false;
+			}
+			object value = this.m_Target.GetValue();
+			string valueType = this.m_Value.valueType;
+			if (valueType == typeof(string).ToString())
+			{
+				return this.TestByString((string)value);
+			}
+			if (valueType == typeof(bool).ToString())
+			{
+				return this.TestByBool((bool)value);
+			}
+			if (valueType == typeof(float).ToString())
+			{
+				return this.TestByDouble((double)((float)value));
+			}
+			if (valueType == typeof(double).ToString())
+			{
+				return this.TestByDouble((double)value);
+			}
+			if (valueType == typeof(decimal).ToString())
+			{
+				return this.TestByDouble((double)((decimal)value));
+			}
+			if (valueType == typeof(int).ToString())
+			{
+				return this.TestByDouble((double)((int)value));
+			}
+			if (valueType == typeof(short).ToString())
+			{
+				return this.TestByDouble((double)((short)value));
+			}
+			if (valueType == typeof(long).ToString())
+			{
+				return this.TestByDouble((double)((long)value));
+			}
+			if (valueType == "enum")
+			{
+				return this.TestByEnum(((Enum)value).ToString().ToLower());
+			}
+			return this.TestByObject(value);
+		}
+
+		private bool TestByObject(object currentValue)
+		{
+			bool result = false;
+			TriggerOperator @operator = this.m_Operator;
+			if (@operator != TriggerOperator.Equals)
+			{
+				if (@operator == TriggerOperator.DoesNotEqual)
+				{
+					result = !currentValue.Equals(this.m_Value.propertyValue);
+				}
+			}
+			else
+			{
+				result = currentValue.Equals(this.m_Value.propertyValue);
+			}
+			return result;
+		}
+
+		private bool TestByEnum(string currentValue)
+		{
+			bool result = false;
+			TriggerOperator @operator = this.m_Operator;
+			if (@operator != TriggerOperator.Equals)
+			{
+				if (@operator == TriggerOperator.DoesNotEqual)
+				{
+					result = !currentValue.Equals(this.m_Value.propertyValue.ToString().ToLower());
+				}
+			}
+			else
+			{
+				result = currentValue.Equals(this.m_Value.propertyValue.ToString().ToLower());
+			}
+			return result;
+		}
+
+		private bool TestByString(string currentValue)
+		{
+			bool result = false;
+			TriggerOperator @operator = this.m_Operator;
+			if (@operator != TriggerOperator.Equals)
+			{
+				if (@operator == TriggerOperator.DoesNotEqual)
+				{
+					result = !currentValue.Equals(this.m_Value.propertyValue);
+				}
+			}
+			else
+			{
+				result = currentValue.Equals(this.m_Value.propertyValue);
+			}
+			return result;
+		}
+
+		private bool TestByBool(bool currentValue)
+		{
+			bool result = false;
+			bool obj = bool.Parse(this.m_Value.propertyValue);
+			TriggerOperator @operator = this.m_Operator;
+			if (@operator != TriggerOperator.Equals)
+			{
+				if (@operator == TriggerOperator.DoesNotEqual)
+				{
+					result = !currentValue.Equals(obj);
+				}
+			}
+			else
+			{
+				result = currentValue.Equals(obj);
+			}
+			return result;
+		}
+
+		private bool TestByDouble(double currentValue)
+		{
+			bool result = false;
+			double @double = this.GetDouble(this.m_Value.propertyValue);
+			switch (this.m_Operator)
+			{
+			case TriggerOperator.Equals:
+				result = this.SafeEquals(currentValue, @double);
+				break;
+			case TriggerOperator.DoesNotEqual:
+				result = !this.SafeEquals(currentValue, @double);
+				break;
+			case TriggerOperator.IsGreaterThan:
+				result = (currentValue > @double);
+				break;
+			case TriggerOperator.IsGreaterThanOrEqualTo:
+				result = (currentValue > @double || this.SafeEquals(currentValue, @double));
+				break;
+			case TriggerOperator.IsLessThan:
+				result = (currentValue < @double);
+				break;
+			case TriggerOperator.IsLessThanOrEqualTo:
+				result = (currentValue < @double || this.SafeEquals(currentValue, @double));
+				break;
+			case TriggerOperator.IsBetween:
+			{
+				double double2 = this.GetDouble(this.m_Value2.propertyValue);
+				result = (currentValue > @double && currentValue < double2);
+				break;
+			}
+			case TriggerOperator.IsBetweenOrEqualTo:
+			{
+				double double3 = this.GetDouble(this.m_Value2.propertyValue);
+				result = (this.SafeEquals(currentValue, @double) || this.SafeEquals(currentValue, double3) || (currentValue > @double && currentValue < double3));
+				break;
+			}
+			}
+			return result;
+		}
+
+		private bool SafeEquals(double double1, double double2)
+		{
+			return Math.Abs(double1 - double2) < 1E-07;
+		}
+
+		private double GetDouble(object value)
+		{
+			return double.Parse(value.ToString());
+		}
+	}
+}
+

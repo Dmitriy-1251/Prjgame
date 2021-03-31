@@ -1,0 +1,8 @@
+// Decompile from assembly: netstandard.dll
+
+using System;
+
+internal class <Module>
+{
+}
+

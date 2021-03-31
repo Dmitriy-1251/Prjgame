@@ -1,0 +1,400 @@
+DAD9846B|Export FBX Settings
+8EC5A437|FBX binary save
+569C495A|Include models
+B418D2A2|Include textures
+8BA15127|Include animations
+CE0FB7E1|OK
+76594D8C|Cancel
+9DA2BD0|3D Scene generate settings
+A1316626|Asset objects save to /TempAssets/
+F47D5E56|License for 'GameRecovery' not activated!
+C5EF7EC5|Set all gameobjects as active
+7440FD22|Allow RigingBody
+8EFCE06|Allow Audio
+636455D3|Show animation preview (available only in UnityEditor version)
+36707B8D|Show video clips
+4D1C3635|Show Particles
+ED4EE62E|Add additional light
+1707F26E|Show scene elements on make
+89627899|Asynk make scene
+13DCA69B|Proxy settings
+8ADD8276|Use proxy connection
+3F93BF04|Server:
+158D900|Port:
+CA2DF85D|Use Proxy Authentication
+A19445D0|User name:
+D086BA55|Password:
+800542D8|Import settings
+3E64DDA1|Asset settings
+12F151A6|Bundle auto extract
+A199C855|Import bundle as Level
+D8F87912|Saving RAM (export slower)
+8AB7DCC5|Cache time in seconds:
+F7D7718C|Fast open
+A29EBB83|Additional Log
+D356CEEF|Normal map auto convert
+B479DB39|Mesh normals recalculate for view
+B5ED1B5F|Allow restore shader as UnityLab format (for GameRecovery license type)
+10630F7|Only available for DevX GameRecovery license type.
+A10E5601|Ignore scenes
+55EFDF96|Ignore StreamingAssets directory
+E7C89762|When you enable async options, it will be faster, but errors are possible!
+2112BD71|Async parse of Bundle
+4ED032E0|Async parse of Assets
+B4FA0730|Async make of Assets
+107F8FC8|Disable swap buffers to file stream (for fasted)
+B20B92C9|IL2CPP Script settings
+4EDDA686|IL2CPP Restore Scripts Structured
+DB9E7D17|IL2CPP to decompile into ARM ASM && C# (experemental, slow)
+6D77C25E|Restore only fields (for deserialization and minimize scripts errors)
+C4BFB9F4|.NET assembly script decompilation
+5DBA5417|Allow to de-obfuscate assembly
+120E3FB8|Disable decompilation
+4EFC5297|DecompillerFi
+8E61889B|dnSpy Decompiller
+8630CF6E|Standart Decompiller
+945252BE|Simple Code Decompiller
+50FA4B8E|Custom extern decompiller
+F7B28663|Custom extern decompiller, path to executable file:
+B03E8947|parameters on run: "assembly_name.dll" -p -o "output_dir"
+6D8B26B7|Temp directory
+E8CCC172|Open
+481459F7|With generate project
+2A463756|With export resources
+AC7A600E|Allow delayed extraction of scripts
+149E85E|Assemblies (for decompilation to .cs scripts)
+917298B4|Disable header information for scripts (header on .cs files)
+2A11D566|Scene params
+E3E1083F|Make direct MeshAsset (else Mesh by .obj file)
+33C19C13|Make all GameObjects as Active (override)
+6DBC0660|Allow restore shaders (base mode, without convert to ShaderLab format)
+61A5FC0F|Allow async export
+A44EA654|Export multi sprite texture as separate sprite files
+552C00E0|Disable append bundle path to asset
+8391C557|Unity Project Version
+C3F188C3|Script generate settings
+BCF283D5|- As source code (.cs)
+1EC75768|- As plugin (.dll)
+D65F8F6B|- Exclude
+E54C2A1D|Unity 5.6
+5E77CD61|Unity 2017.3
+D312CD61|Unity 2017.2
+5E74CD61|Unity 2018.3
+47ABCD61|Unity 2019.1
+7005F23B|APKSigner Dialog
+23F99CC3|With signature (apk without signature - can not be installed on the device)
+7C411C18|APKSigner Dialog - required JDK
+18D1C1FD|Paths
+3EAED1C5|keytool path:
+70B85F11|jarsigner path:
+2084ED5F|zipalign path:
+3D76F7AC|Auto find tools
+311144D4|Keystore
+276F9AC4|Create temp key
+C52368B|Select custom key
+FE68A80|Keystore file:
+C01D298D|Store password:
+B25E2AD4|Key alias:
+AE8DCA9A|Key password:
+9866B14B|NDName:
+7348C09D|keytool_path - not exist
+6989E77C|jarsigner_path - not exist
+19F52844|zipalign_path - not exist
+7DCF9ACA|KeyStore - not exist
+2E03BEB6|Search result count:
+72FFF1C2|Loading..
+8FEB664F|Please wait...
+676EEA33|Wait... Parse assembly 
+8FD05778|Parse - ok
+783216DC|Error on Parse assembly 
+C2CB40EE|Reboot required
+67F2EC47|Wait... Image compression... This may take a few minutes
+4D34EB5B|// Not found assembly: 
+7981C3BD|\n// This project used IL2CPP, assembly converted to native code.
+C7E2652|//Not found assembly: 
+A6669136|None
+9DFCAC55|      : 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F | 0123456789ABCDEF
+BCB3D597|name: 
+CEAAC85D|frequency: 
+AEFE552B|channels: 
+79FE86AE|length: 
+E59A450A|is play: 
+C20EF311|Volume: 
+31D1912E|Find
+87DB2|Clear
+C0FFC7D1|Hide filter
+1527D9A|Break
+CE06B7E7|ID
+3BD1C9B|Name
+C15430C6|Type
+407FF2E0|Offset
+99E6EA55|Class name
+4FEDF4B6|Content
+2420F02F|Search in scrips
+269E0426|As Text
+D09E5E3C|As Hex
+74844BC4|Select dir
+95211AF8|Save file
+B1D3C7DE|Open file
+9470F039|Filter: 
+18F1C236|Path: 
+E56D526B|Directories & files: 
+B957F173|Selected File: 
+D1CFC931|Selected File : 
+E77F1B7F|Selected dir: 
+19BC6620|Select
+236A6BAB|License dialog
+8F34F9B7|License: 
+D1DF61FE|License - Invalid!
+F9F0A5CA|License valid, number: 
+6B21469B|Activate
+5954D7B7|Activation - Sucsess.
+CFA1C227|Close
+4DCF8CCF|Loading
+8FFD664F|Please wait..
+4F02B678|Export to:
+AFBC690B|Export :
+574C4B4D|Export error: 
+F0F2A2E7|Export make asset:
+9878BDA0|Export asset:
+F9C1452A|Export ok, count: 
+997E9824|Import from:
+23FA00C6|Import ok, count: 
+9706AC3F|Wait.. Making UnityProject..
+F46222AE|Wait.. Making UnityProject.. 
+FB976152| export asset: 
+A12C3A7B|Wait.. Making Unity Project.. 
+E7433FE6|Wait.. Making Unity Project.. Make scripts for 
+98C91534|MakeUnityProject - ok
+5792227B|Wait.. TestAssets..
+EAF2227B|Wait.. TestAssets.. 
+50D60E8F|TestAssets - end
+EDF536FB|Wait.. Making Prefabs..
+5A9536FB|Wait.. Making Prefabs.. 
+7415C18D|MakePrefabs - ok
+24A9DD5| make asset: 
+47F22DBE|Wait.. Making Unitypackage..
+42A7B955|Wait.. Export Scripts..
+D1DB6975|Unitypackage - ok
+20E9686B|Unitypackage - end with error
+BD04F926|Make prefab - ok
+FF163379|Make prefab - error
+995DB01E|Make prefab - break
+7223DB42|Wait.. Making Prefab..
+F3637C58|Make parfab asset:
+44C16C93|Wait.. Generate Scripts..
+44A0ECF3|Wait.. Generate scripts.. 
+C764262B|Generate Scripts - ok
+7DE1C29C|ExportUassetsFromUnrealEnginePAK to:
+310513B1|ExportUassetsFromUnrealEnginePAK ok, count: 
+A09AEE74|Waiting.. open
+1AAA4AE1|Waiting.. 
+CDAAB77B|% 
+FF4D2980|parsing
+1ACA4AE1|Waiting..
+EB80C700|Decompile libil2cpp.so (IL2CPP) to C# code
+F6525294|Waiting.. Recreate all assets..
+5472E972|Waiting.. Update all..
+CDEFB7E1|Ok
+2F15684B|Waiting.. MakePreview..
+C4EC7D79|Waiting.. MakePreview-end
+AF344CBD|Make asset
+DC39D535|Waiting.. make tree structure.. for 
+24501B89|Waiting.. make tree structure - ok
+594B5358|Waiting.. parsing content...
+2B9B294E|Waiting.. make tree...
+4E8E089D|Waiting.. Resource manager.. Resources path update, items: 
+187801F3|Waiting.. ScriptMapper.. Resources path update, items: 
+A75C67B0|Waiting.. AssetBundle.. Resources path update, items: 
+A08F9053|Waiting.. m_AssetToPrefab.. items: 
+C60B13FD|Waiting.. make tree - end
+277313E7|.split0
+9914F0E|Waiting.. Import Asset: 
+76314F0E|Waiting.. Import Asset:
+183D2F98| - read structure..
+312589DC| - init objects ..
+AB925A89|Open OK, Items count: 
+5AED673|Error
+76CA22F1|Waiting... open bundle: 
+5D8D673|Error:
+9FB1A365|read end
+4417A002|APK:
+535EE5DE|Waiting.. Open apk begin...
+EDD4194A|Waiting.. Open IPA begin...
+2C9F6E00|Waiting.. Open Unitypackage begin...
+B67182FE|Waiting... open webGL: 
+4F8CE226|Impoer Ok:
+C7BC26B7|Error on create zip: 
+FD528D50|Make zip - end
+4E93D81|Wait... Save Bundle
+214685F7|Wait... make apk 
+A900A8D|Error on create APK: 
+23D17C38|Make apk - ok
+75CBB8DD|Wait... make obb 
+AE0D89A4|Error on create obb: 
+75B70BDE|Make obb - ok
+3DFC8A9F|Waiting.. Parsing item: 
+570BFFCF|Waiting.. Parsing script: 
+6475DF5C| - Sometimes the primary decompilation can take several minutes (depends on the size of the assembly)..
+D08181D|Waiting.. Parsing asset item: 
+C804CEBE|Waiting... open uasset: 
+16CA047B|Waiting... open pak: 
+4882047|Waiting...  open unity GameDir..
+76D2CE09|Open unity GameDir - end
+4F34C49E|Run DevXC file - only available for 'DevX-GameRecovery' or 'DevX-GameModing' license type.
+417761F0|Run DevXC file - only available for 'DevX-GameRecovery' or 'DevX-GameModing' or 'DevX-MagicStudio' license type.
+69446BC7|Make temp key...
+2C3E7114|License for  'GameRecovery' not activated!
+E48E0C23|License for 'RePacker Tools' or 'Android Unpacker' or 'Unpacker Studio' or 'GameRecovery' not activated!
+F69FEAA9|Item not support export
+53B9408B|You can save with conversion no more than once every two minutes.
+A6E20CE7|Object - not supported replace
+DC930C23|License for 'RePacker Tools' or 'Android Unpacker' or 'Unpacker Studio' or 'GameRecovery' not activated
+FCB08D72|The file extension must match
+8726FB75|Not supported for this asset type
+E005EA6|Only available for 'DevX-GameRecovery' or 'DevX-GameModing' license type.
+BCFB679A|Not support for add child component.
+FCD072D|Selected items are not supported for copying.
+A86A2FA1|Not selected asset to copy (Copy asset)
+3A35DCF0|Not selected owner asset to create GameObjext
+528FF6F|License for  'Unpacker Studio' or 'GameRecovery' not activated!
+46A8422F|An error occurred while connecting to the server,\r\nplease check the network status and website availability of devxdevelopment.com\r\nand try again later.
+2627AE0E|License for 'Unpacker tools' or 'Android Unpacker' or 'RePacker Tools' or 'Unpacker Studio' or 'GameRecovery' not activated!
+4F91DB58|License for 'Android Unpacker' or 'RePacker Tools' or 'Unpacker Studio' or 'GameRecovery' not activated!
+7EA6BE1C|License for 'Unpacker Studio' or 'GameRecovery' not activated!
+2D5ED39F|Unsupported format
+5F0013FA|Exported to 
+77F9CD7A|Wait... Extract audio..
+4F70EAA5|Project protected by
+68C81170|Dont select MeshAsset
+8ECD3E7F|License for  'Unpacker Tools' or 'Repacker Tools' or 'Unpacker Studio' or 'GameRecovery' not activated!
+82955BC5|Dont select GameObject!
+BF6DE30B|Width: 
+C4DBC9EF|, Height: 
+72807AF3|, Format: 
+681748FF|, MipMapCount: 
+B86AE29D|Original game info: 
+A7373E98|The version is obsolete. Need to install a new version.
+CCC044AA|Export as Unitypackage
+3A9F492F|Export as ZIP
+8E1C48B9|Export as Prefab
+EC5ADA02|Export model as FBX
+EF96D912|Make node dump
+1BBE6284|Save header
+19985A62|Save content (without convertation)
+A4A40923|Export content (with convert format: png, wav, etc)
+762B577F|Export all Sprites (for Texture2D)
+10A45610|Replace binary content (binary, png, wav, etc)
+18F6772D|Dublicate asset
+5BDBD338|Copy asset
+315A3F47|Paste asset
+C0E8BD20|Delete asset
+55607B33|Open Unity3D game directory
+874EFF8D|Open as APK, OBB, XAPK file (android)
+1C183D79|Open as IPA file (iOS)
+D245194|Open as Assets Bundle file
+B6D01A42|Open as Unity WebGL file (.unityweb, .data)
+98E0C71D|Open as Unity WebGL Game by URL
+C7676174|Open as SketchFab.com model by URL
+CDE707F8|Open as Asset file
+3B58AB5A|Open as binary
+670B26E1|Open DDS Texture
+D5EB1CC9|Settings
+F50760A0|UI Scale
+FBE32C6F|Font Size
+7421349B|Default
+225FCCAE|3D Scene Zoom Scale
+28998A05|Invert swipe scroll
+5530D0CE|Disable auo open result files
+324D865C|Show classic wait mode
+238432FB|Proxy Settings
+7E1E21E1|APK Sign settings
+C175ED3D|Export
+D81F50B6|Make unity project
+978ECC6B|Export resources to directory
+CB677E5E|Export resources for Repack
+9D9F8CAD|Import resources for Repack
+CD938811|Generate Project Scripts
+5CE1E87B|Export All Prefabs
+926D75C7|Export uassets from Unreal Engine PAK
+5CDB63A9|Filter
+117086B5|Group resources
+19A5084C|Reset filter
+BFB17160|By name: 
+E36617B5|Show items ID
+A77BEFBB|Repack
+AC5DC3F|Apply all changes (repack bundle, make APK, etc)
+EFD46E44|Replace image
+C9B78102|Edit and replace text
+74EE86CF|Replace sound
+20021A2C|FlipY on image replace
+706221D5|Select next
+9F84AD27|Search
+7FC009CC|Language
+62B922E|Updates
+227493AA|License
+CE10E97|License view
+9B0D007B|Buy
+7F742002|Video lessons
+E9758365|Full screen
+2B63AAAB|Logs
+C8725F56|Save asset
+870CAE01|Play..
+B86205DC|Stop
+96F473B3|Save as WAV
+775D35E8|Sound
+7C844F7|Save PNG
+556AB41B|Save all Sprites
+1CB36450|Background
+C8DCF0B7|Chessboard
+74D407C9|White
+5EA0AB2E|Black
+2D7CAD2D|Scale
+33A355B7|Without alpha channel
+4CBD9E92|Save HEX Dump
+D03C6679|Value
+FE4868C0|Lenght (bytes)
+C9529C11|Asset header edit
+A6084A6E|Text:
+46BFA41C|Method name:
+5ECA0B4B|Update
+18B1C08E|Method
+CA64270|Destanation method
+A658D7B5|Reset camera
+329664D3|Move Camera to Zerro
+15551757|Shape model
+F0F17831|Cube model
+BCFB426B|3D View model
+B660A348|Orbit camera
+263ECE90|Fly camera
+1B277095|First Person Camera
+A4A09668|Make scene
+4FFC4733|Make preview
+D5FE0A41|Clear scene
+8941CEE5|Clear assets cache
+C96FB87E|Export as OBJ
+56DB8833|Export as FBX
+D9E066FF|Export as Asset
+2C4767F5|Light
+91CA841C|Goto to Selected
+EDB18BEE|Text
+B20B46F5|Metadata
+48414E76|Lenght
+EC4F4D64|Bundle
+E64019FA|Ver 
+EA26F7BD|Status: 
+D94ABDBB|For save changes to assets: press to button 'Apply changes'
+5D8CF4D3|Assets Bundle\n
+77B48C01|Engine version: 
+3CF3C1E8|Bundle size: 
+A0BFA96D|Signature: 
+1B77120F|Items: \n
+BAD14A28|Edit
+49BC9CCF|\nStrings count: 
+93D8BB67|IS DEMO VERSION!
+6A0B8062|Is Demo Version
+62ABA32D|Exist new version
+29AAA97D|Apply changes - end
+2A8CF32F|Play.. 
+5AED193|error
+F77C0D5C|Project generate settings
