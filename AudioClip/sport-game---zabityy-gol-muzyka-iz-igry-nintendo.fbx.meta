@@ -1,0 +1,16 @@
+  m_Name: sport-game---zabityy-gol-muzyka-iz-igry-nintendo
+  m_LoadType: 0
+  m_Channels: 2
+  m_Frequency: 44100
+  m_BitsPerSample: 16
+  m_Length: 5.616326
+  m_IsTrackerFormat: 0
+  m_SubsoundIndex: 0
+  m_PreloadAudioData: 1
+  m_LoadInBackground: 0
+  m_Legacy3D: 1
+  m_Resource: 
+    m_Source: sharedassets1.resource
+    m_Offset: 6203072
+    m_Size: 52160
+  m_CompressionFormat: 1

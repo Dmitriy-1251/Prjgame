@@ -1,0 +1,16 @@
+  m_Name: Jump
+  m_LoadType: 1
+  m_Channels: 1
+  m_Frequency: 44100
+  m_BitsPerSample: 16
+  m_Length: 0.2531292
+  m_IsTrackerFormat: 0
+  m_SubsoundIndex: 0
+  m_PreloadAudioData: 1
+  m_LoadInBackground: 0
+  m_Legacy3D: 1
+  m_Resource: 
+    m_Source: sharedassets1.resource
+    m_Offset: 101248
+    m_Size: 22464
+  m_CompressionFormat: 0

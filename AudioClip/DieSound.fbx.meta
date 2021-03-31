@@ -1,0 +1,16 @@
+  m_Name: DieSound
+  m_LoadType: 0
+  m_Channels: 2
+  m_Frequency: 48000
+  m_BitsPerSample: 16
+  m_Length: 1.05525
+  m_IsTrackerFormat: 0
+  m_SubsoundIndex: 0
+  m_PreloadAudioData: 1
+  m_LoadInBackground: 0
+  m_Legacy3D: 1
+  m_Resource: 
+    m_Source: sharedassets1.resource
+    m_Offset: 2797248
+    m_Size: 40896
+  m_CompressionFormat: 1
